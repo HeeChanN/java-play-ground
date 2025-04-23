@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'application'
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+application {
+    mainClassName = 'org.example.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation platform('org.assertj:assertj-bom:3.27.3')
+
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation('org.assertj:assertj-core')
+    implementation("com.google.code.gson:gson:2.10.1")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.named('shadowJar') {
+    archiveBaseName.set('demo')
+    mergeServiceFiles()
+}
