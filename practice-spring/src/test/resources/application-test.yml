@@ -1,0 +1,17 @@
+logging:
+  level:
+    # CORS 처리 주요 로그
+    org.springframework.web.cors: DEBUG
+    org.springframework.web.filter.CorsFilter: DEBUG
+
+    # DispatcherServlet 흐름 추적 (진입 → 핸들러 매핑 → 어댑터 → 반환)
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+
+    # 요청 핸들러 찾는 과정
+    org.springframework.web.servlet.handler.AbstractHandlerMapping: DEBUG
+
+    # 요청 어댑터 실행
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: DEBUG
+
+    # HTTP 요청 초기 필터 체인 진입 로그 확인용
+    org.springframework.web.filter.OncePerRequestFilter: DEBUG
