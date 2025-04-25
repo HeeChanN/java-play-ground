@@ -1,4 +1,4 @@
-package com.example.custom_logger;
+package com.example.practice_design_pattern;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
