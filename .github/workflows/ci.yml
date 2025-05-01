@@ -51,7 +51,7 @@ jobs:
         if: always()
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: build/reports/spotbugs/spotbugsMain.sarif
+          sarif_file: build/reports/spotbugs/main.sarif
 
       - name: Run Unit Tests
         run: ./gradlew test -Dspring.profiles.active=test
