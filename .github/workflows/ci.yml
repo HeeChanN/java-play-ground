@@ -12,6 +12,12 @@ jobs:
       pull-requests: write
       security-events: write # SARIF 업로드용
 
+    
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./practice-gradle
+    
     steps:
       - uses: actions/checkout@v4
         with:
