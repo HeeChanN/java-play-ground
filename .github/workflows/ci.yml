@@ -35,7 +35,7 @@ jobs:
         uses: reviewdog/action-suggester@v1.5.1
         with:
           tool_name: spotless
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACTION_TOKEN }}
 
       - name: Run SpotBugs
         run: ./gradlew spotbugsMain
@@ -57,7 +57,7 @@ jobs:
       - name: Coverage Report (JaCoCo)
         uses: madrapps/jacoco-report@v1.7.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACTION_TOKEN }}
           paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           min-coverage-overall: 80
           min-coverage-changed-files: 80
