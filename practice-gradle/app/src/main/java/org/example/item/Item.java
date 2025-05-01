@@ -11,4 +11,8 @@ public class Item {
     public void increaseCnt() {
         cnt++;
     }
+
+    public void decreaseCnt() {
+        cnt--;
+    }
 }
