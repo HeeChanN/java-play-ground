@@ -34,4 +34,10 @@ public class ItemTest {
 
         assertThat(item.getCnt()).isEqualTo(-1);
     }
+
+    @Test
+    void equalsTest() {
+        Item item = new Item();
+        assertThat(item).isEqualTo(item);
+    }
 }
