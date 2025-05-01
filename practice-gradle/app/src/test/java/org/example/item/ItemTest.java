@@ -25,4 +25,13 @@ public class ItemTest {
 
         assertThat(item.getCnt()).isEqualTo(1);
     }
+
+    @Test
+    void decrementTest() {
+        Item item = new Item();
+
+        item.decreaseCnt();
+
+        assertThat(item.getCnt()).isEqualTo(-1);
+    }
 }
