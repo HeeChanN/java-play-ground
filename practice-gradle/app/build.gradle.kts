@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     id("com.diffplug.spotless") version "7.0.3"
+    jacoco
 }
 
 repositories {
@@ -18,9 +19,20 @@ repositories {
 
 spotless{
     java {
-        googleJavaFormat("1.20.0").aosp()
+        googleJavaFormat("1.20.0")
+            .aosp()
         target("src/**/*.java")
+
+        importOrder("java|javax", "org", "com.mycorp", "", "\\#")
+        removeUnusedImports()
+
+        trimTrailingWhitespace()
+        endWithNewline()
     }
+}
+
+jacoco {
+    toolVersion = "0.8.13"
 }
 
 dependencies {
@@ -48,4 +60,13 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+}
+
