@@ -15,7 +15,5 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        Item item = new Item();
-        List<String> list = new ArrayList<String>();
     }
 }
