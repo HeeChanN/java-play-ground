@@ -44,7 +44,7 @@ public class ItemTest {
     @Test
     void setTest() {
         Item item = new Item();
-        item.setCnt(1);
-        assertThat(item.getCnt()).isEqualTo(1);
+        item.setCnt(2);
+        assertThat(item.getCnt()).isEqualTo(2);
     }
 }
