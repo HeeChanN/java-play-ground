@@ -1,13 +1,14 @@
 package org.example.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Item {
 
-    List<String> names = new ArrayList<String>();
+    private int cnt = 0;
 
-    public void addName(String name) {
-        names.add(name);
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void increaseCnt() {
+        cnt++;
     }
 }
