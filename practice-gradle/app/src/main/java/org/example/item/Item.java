@@ -15,4 +15,8 @@ public class Item {
     public void decreaseCnt() {
         cnt--;
     }
+
+    public String toString() {
+        return cnt + "";
+    }
 }

@@ -103,7 +103,7 @@ tasks.named<SpotBugsTask>("spotbugsMain") {
 
         /* SARIF — GitHub Code Scanning 용 (필요 없으면 true→false) */
         create("sarif") {
-            required.set(false)
+            required.set(true)
         }
     }
 }
