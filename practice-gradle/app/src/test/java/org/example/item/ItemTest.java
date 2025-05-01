@@ -40,4 +40,11 @@ public class ItemTest {
         Item item = new Item();
         assertThat(item).isEqualTo(item);
     }
+
+    @Test
+    void setTest() {
+        Item item = new Item();
+        item.setCnt(1);
+        assertThat(item.getCnt()).isEqualTo(1);
+    }
 }
