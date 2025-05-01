@@ -3,11 +3,6 @@
  */
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.example.item.Item;
-
 public class App {
     public String getGreeting() {
         return "Hello Second World!";
