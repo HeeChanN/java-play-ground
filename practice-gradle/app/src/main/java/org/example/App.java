@@ -3,6 +3,11 @@
  */
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.example.item.Item;
+
 public class App {
     public String getGreeting() {
         return "Hello Second World!";
@@ -10,5 +15,7 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        Item item = new Item();
+        List<String> list = new ArrayList<String>();
     }
 }
