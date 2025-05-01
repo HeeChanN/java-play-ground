@@ -19,4 +19,8 @@ public class Item {
     public String toString() {
         return cnt + "";
     }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
 }
