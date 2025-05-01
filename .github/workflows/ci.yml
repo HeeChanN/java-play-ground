@@ -64,8 +64,9 @@ jobs:
 
       - name: Coverage Report (JaCoCo)
         id: jacoco
-        uses: madrapps/jacoco-report@v1.7.1
+        uses: madrapps/jacoco-report@v1.6
         with:
+          title: Test Coverage Report
           token: ${{ secrets.ACTION_TOKEN }}
           paths: ${{ github.workspace }}/practice-gradle/app/build/reports/jacoco/test/jacocoTestReport.xml
           min-coverage-overall: 80
