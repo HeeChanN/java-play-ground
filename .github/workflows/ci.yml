@@ -63,16 +63,11 @@ jobs:
           files: practice-gradle/app/build/test-results/test/TEST-*.xml
 
       - name: Coverage Report (JaCoCo)
+        id: jacoco
         uses: madrapps/jacoco-report@v1.7.1
         with:
           token: ${{ secrets.ACTION_TOKEN }}
           paths: ${{ github.workspace }}/practice-gradle/app/build/reports/jacoco/test/jacocoTestReport.xml
           min-coverage-overall: 80
           min-coverage-changed-files: 80
-
-      - name: Inline Failed-Test Lines
-        if: always()
-        uses: mikepenz/action-junit-report@v4
-        with:
-          report_paths: practice-gradle/app/build/test-results/test/TEST-*.xml
-          token: ${{ github.ACTION_TOKEN }}
+          
