@@ -13,8 +13,6 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       location: C:/Users/ahc70/Desktop/tmp
-  jackson:
-    time-zone: Asia/Seoul
   datasource:
     url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username:
@@ -37,12 +35,12 @@ spring:
         show_sql: true
         format_sql: true
         generate_statistics: true
-#        jdbc:
-#          hibernate.order_inserts: true          # INSERT 정렬
-#          hibernate.order_updates: true          # UPDATE 정렬
-#          batch_size: 100
+        jdbc:
+          hibernate.order_inserts: true          # INSERT 정렬
+          hibernate.order_updates: true          # UPDATE 정렬
+          batch_size: 100
       logging.level:
         org.hibernate.type
-logging:
-  level.org.hibernate.SQL: DEBUG
-  level.org.hibernate.orm.jdbc.bind: TRACE
+#logging:
+#  level.org.hibernate.SQL: DEBUG
+#  level.org.hibernate.orm.jdbc.bind: TRACE
