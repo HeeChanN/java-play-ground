@@ -1,0 +1,34 @@
+= Item API
+:toc:
+:toclevels: 2
+:sectnums:
+:toc-title: 목차
+:toc: left
+
+
+== POST /api/items – 아이템 생성
+
+'''
+
+operation::items/create-item[snippets="http-request,request-fields,response-fields,http-response"]
+
+'''
+
+
+=== Error Response
+
+include::{snippets}/items/create-item/blank-name/response-fields.adoc[]
+
+==== 이름이 공백인 경우
+include::{snippets}/items/create-item/blank-name/http-response.adoc[]
+
+==== 가격이 음수인 경우
+include::{snippets}/items/create-item/minus-price/http-response.adoc[]
+
+
+
+
+
+== GET /api/items/{id} – 아이템 단건 조회
+
+operation::items/get-item-by-id[snippets="http-request,response-fields,http-response"]

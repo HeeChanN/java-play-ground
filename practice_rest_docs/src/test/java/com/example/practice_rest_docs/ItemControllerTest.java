@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest(ItemController.class)
 @SuppressWarnings("NonAsciiCharacters")
+@AutoConfigureRestDocs
+@Import(CustomRestDocsConfig.class)
 public class ItemControllerTest {
 
     @Autowired
@@ -58,7 +62,35 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value(itemCreateDto.getName()))
                 .andExpect(jsonPath("$.description").value(itemCreateDto.getDescription()))
-                .andExpect(jsonPath("$.price").value(itemCreateDto.getPrice()));
+                .andExpect(jsonPath("$.price").value(itemCreateDto.getPrice()))
+                .andDo(ItemDoc.createItem());
+    }
+
+    @Test
+    void 아이템_생성시_이름_공백_검증() throws Exception{
+        ItemCreateDto errorRequest = new ItemCreateDto("", "description", 10000);
+
+        //when & then
+        mockMvc.perform(post("/api/items")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(errorRequest)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.message").value("이름은 공백일 수 없습니다."))
+                .andDo(ItemDoc.errorSnippet("items/create-item/blank-name"));
+    }
+
+    @Test
+    void 아이템_생성시_가격이_음수일_경우_검증() throws Exception{
+        ItemCreateDto errorRequest = new ItemCreateDto("name", "description", -10000);
+
+        //when & then
+        mockMvc.perform(post("/api/items")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(errorRequest)))
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.message").value("가격은 0 이상이어야 합니다."))
+                .andDo(ItemDoc.errorSnippet("items/create-item/minus-price"));
     }
 
     @Test
@@ -73,6 +105,7 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value(itemCreateDto.getName()))
                 .andExpect(jsonPath("$.description").value(itemCreateDto.getDescription()))
-                .andExpect(jsonPath("$.price").value(itemCreateDto.getPrice()));
+                .andExpect(jsonPath("$.price").value(itemCreateDto.getPrice()))
+                .andDo(ItemDoc.getItem());
     }
 }

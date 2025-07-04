@@ -60,7 +60,10 @@ bootJar {
 	}
 }
 
-tasks.named('bootRun') {
-	dependsOn(tasks.asciidoctor)
-	classpath += files(asciidoctor.outputDir)
+bootRun {
+	dependsOn tasks.asciidoctor
+	classpath += files(tasks.asciidoctor.outputDir)
+
+	systemProperty "spring.web.resources.static-locations",
+			"classpath:/static/,file:${tasks.asciidoctor.outputDir}"
 }
