@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
+	id 'com.epages.restdocs-api-spec' version '0.18.2'
 }
 
 group = 'com.example'
@@ -40,6 +41,10 @@ dependencies {
 	//rest docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+	//restdocs-api-spec
+	testImplementation("com.epages:restdocs-api-spec:0.18.2")
+	testImplementation("com.epages:restdocs-api-spec-mockmvc:0.18.2")
 }
 
 tasks.named('test') {
@@ -55,15 +60,82 @@ tasks.named('asciidoctor') {
 
 bootJar {
 	dependsOn tasks.asciidoctor
+	dependsOn 'openapi3'
+
 	from ("${asciidoctor.outputDir}") {
 		into 'static/docs'
+	}
+	from("build/api-spec/openapi3.yaml") {
+		into 'static/docs/api'
+	}
+	from("src/docs/redoc/index.html") {
+		into 'static/docs/redoc/api'
+	}
+	from("src/docs/swagger/index.html") {
+		into 'static/docs/swagger/api'
 	}
 }
 
 bootRun {
 	dependsOn tasks.asciidoctor
+	dependsOn 'openapi3'
 	classpath += files(tasks.asciidoctor.outputDir)
+
+	doFirst {
+		copy {
+			from("src/docs/redoc/index.html")
+			into("${tasks.asciidoctor.outputDir}/static/docs/redoc")
+		}
+		copy {
+			from("src/docs/swagger/index.html")
+			into("${tasks.asciidoctor.outputDir}/static/docs/swagger")
+		}
+		copy {
+			from("build/api-spec/openapi3.yaml")
+			into("${tasks.asciidoctor.outputDir}/static/docs")
+		}
+	}
 
 	systemProperty "spring.web.resources.static-locations",
 			"classpath:/static/,file:${tasks.asciidoctor.outputDir}"
+}
+
+openapi3 {
+	server = 'https://localhost:8080'
+	title = 'My API'
+	description = 'My API description'
+	version = '0.1.0'
+	format = 'yaml'
+}
+
+
+import com.fasterxml.jackson.databind.node.ObjectNode
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+
+def yamlMapper = new YAMLMapper()
+def jsonMapper = new ObjectMapper()
+
+tasks.register('fixOpenApiExamples') {
+	dependsOn tasks.openapi3
+	doLast {
+		def file = file("build/api-spec/openapi3.yaml")
+		def root = yamlMapper.readTree(file)
+
+		root.findParents('value')
+				.each { JsonNode parent ->
+					JsonNode v = parent.get('value')
+					if (v?.isTextual()) {
+						String txt = v.asText().trim()
+						if (txt.startsWith('{') || txt.startsWith('[')) {
+							try {
+								((ObjectNode) parent)
+										.set('value', jsonMapper.readTree(txt))
+							} catch (ignored) {}
+						}
+					}
+				}
+		yamlMapper.writeValue(file, root)
+	}
 }
