@@ -8,6 +8,6 @@ public class Audience {
     }
 
     public Long buy(Ticket ticket){
-        return bag.addTicket(ticket);
+        return bag.hold(ticket);
     }
 }
