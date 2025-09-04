@@ -12,7 +12,13 @@ public class TicketOffice {
         this.tickets.addAll(List.of(tickets));
     }
 
-    public Ticket getTicket() {
+    public Ticket give(){
+        Ticket ticket = getTicket();
+        plusAmount(ticket.getFee());
+        return ticket;
+    }
+
+    private Ticket getTicket() {
         return tickets.remove(0);
     }
 
@@ -20,7 +26,7 @@ public class TicketOffice {
         this.amount -= amount;
     }
 
-    public void plusAmount(Long amount) {
+    private void plusAmount(Long amount) {
         this.amount += amount;
     }
 }
