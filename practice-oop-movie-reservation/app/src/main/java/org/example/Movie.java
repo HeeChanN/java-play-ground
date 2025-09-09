@@ -11,39 +11,49 @@ import java.util.List;
 public class Movie {
     private String title;
     private Integer runningTime;
-    private Long price;
-    private List<DiscountCondition> discountConditions = new ArrayList<>();
+    private Money fee;
     private DiscountPolicy discountPolicy;
 
-    public Long getAmount(){
-        return price;
+    public Movie(String title, Integer runningTime, Money fee, DiscountPolicy discountPolicy) {
+        this.title = title;
+        this.runningTime = runningTime;
+        this.fee = fee;
+        this.discountPolicy = discountPolicy;
     }
 
-    public Integer getRunningTime(){
-        return this.runningTime;
+    public Money getFee(){
+        return fee;
     }
 
-    public String getTitle(){
-        return title;
+    public Money calculateMovieFee(Screening screening){
+        return fee.minus(discountPolicy.calculateDiscountAmount(screening));
     }
 
-    public Long getAmount(LocalDate date, LocalTime time, Integer sequence){
-        if(!hasDiscountPolicy()){
-            return price;
-        }
-        return discount(date, time, sequence);
-    }
-
-    private boolean hasDiscountPolicy(){
-        return discountPolicy != null;
-    }
-
-    private Long discount(LocalDate date, LocalTime time, Integer sequence){
-        for(DiscountCondition condition : discountConditions){
-            if(condition.check(date, time, sequence)){
-                discountPolicy.discount(price);
-            }
-        }
-        return this.price;
-    }
+//    public Integer getRunningTime(){
+//        return this.runningTime;
+//    }
+//
+//    public String getTitle(){
+//        return title;
+//    }
+//
+//    public Long getAmount(LocalDate date, LocalTime time, Integer sequence){
+//        if(!hasDiscountPolicy()){
+//            return price;
+//        }
+//        return discount(date, time, sequence);
+//    }
+//
+//    private boolean hasDiscountPolicy(){
+//        return discountPolicy != null;
+//    }
+//
+//    private Long discount(LocalDate date, LocalTime time, Integer sequence){
+//        for(DiscountCondition condition : discountConditions){
+//            if(condition.check(date, time, sequence)){
+//                discountPolicy.discount(price);
+//            }
+//        }
+//        return this.price;
+//    }
 }

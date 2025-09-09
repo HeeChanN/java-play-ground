@@ -1,11 +1,20 @@
 package org.example.discount_policy;
 
-public class AmountDiscountPolicy implements DiscountPolicy {
+import org.example.Money;
+import org.example.Screening;
+import org.example.discount_condition.DiscountCondition;
 
-    private Long discountAmount;
+public class AmountDiscountPolicy extends DiscountPolicy {
+
+    private Money discountAmount;
+
+    public AmountDiscountPolicy(Money discountAmount, DiscountCondition... discountConditions) {
+        super(discountConditions);
+        this.discountAmount = discountAmount;
+    }
 
     @Override
-    public Long discount(Long price) {
-        return price - discountAmount;
+    protected Money getDiscountAmount(Screening screening) {
+        return null;
     }
 }

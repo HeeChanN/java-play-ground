@@ -1,11 +1,20 @@
 package org.example.discount_policy;
 
-public class PercentDiscountPolicy implements DiscountPolicy {
+import org.example.Money;
+import org.example.Screening;
+import org.example.discount_condition.DiscountCondition;
 
-    private Long discountPercent;
+public class PercentDiscountPolicy extends DiscountPolicy{
+
+    private double percent;
+
+    public PercentDiscountPolicy(double percent, DiscountCondition... discountConditions) {
+        super(discountConditions);
+        this.percent = percent;
+    }
 
     @Override
-    public Long discount(Long price) {
-        return (price * (100 - discountPercent))/ 100L;
+    protected Money getDiscountAmount(Screening screening) {
+        return screening.getMovieFee().times(percent);
     }
 }

@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public interface DiscountCondition {
-    public boolean check(LocalDate date, LocalTime time, Integer sequence);
+    public boolean isSatisfiedBy(Screening screening);
 }

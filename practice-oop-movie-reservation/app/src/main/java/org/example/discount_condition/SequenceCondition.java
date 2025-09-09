@@ -1,14 +1,20 @@
 package org.example.discount_condition;
 
+import org.example.Screening;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class SequenceCondition implements DiscountCondition {
 
-    private Integer required;
+    private int sequence;
+
+    public SequenceCondition(int sequence) {
+        this.sequence = sequence;
+    }
 
     @Override
-    public boolean check(LocalDate date, LocalTime time, Integer sequence) {
-        return this.required == sequence;
+    public boolean isSatisfiedBy(Screening screening) {
+        return screening.isSequence(sequence);
     }
 }
