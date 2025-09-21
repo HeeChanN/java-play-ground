@@ -1,0 +1,12 @@
+2025-09-21T17:17:10.519+09:00  INFO 30120 --- [main] c.e.p.PracticeLoggingApplication         : Starting PracticeLoggingApplication using Java 17.0.0.1 with PID 30120 (C:\Users\ahc70\Desktop\java-study\project\practice_logging\build\classes\java\main started by ahc70 in C:\Users\ahc70\Desktop\java-study\project\practice_logging)
+2025-09-21T17:17:10.522+09:00  INFO 30120 --- [main] c.e.p.PracticeLoggingApplication         : The following 1 profile is active: "staging"
+2025-09-21T17:17:11.317+09:00  INFO 30120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-21T17:17:11.330+09:00  INFO 30120 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-21T17:17:11.330+09:00  INFO 30120 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-21T17:17:11.385+09:00  INFO 30120 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-21T17:17:11.385+09:00  INFO 30120 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 830 ms
+2025-09-21T17:17:11.723+09:00  INFO 30120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-21T17:17:11.737+09:00  INFO 30120 --- [main] c.e.p.PracticeLoggingApplication         : Started PracticeLoggingApplication in 1.804 seconds (process running for 2.364)
+2025-09-21T17:17:11.742+09:00  INFO 30120 --- [scheduling-1] c.e.p.LoggingScheduledTasks              : The time is now 17:17:11
+2025-09-21T17:17:15.115+09:00  INFO 30120 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-21T17:17:15.297+09:00  INFO 30120 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete

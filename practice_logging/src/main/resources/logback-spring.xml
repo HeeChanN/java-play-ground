@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
+
+    <springProfile name="dev">
+        <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="staging">
+        <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+        <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name ="prod">
+
+        <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+        <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+            <labels>
+                app = my-app
+                host = ${HOSTNAME}
+                level = %level
+            </labels>
+            <structuredMetadata>off</structuredMetadata>
+            <message>
+                <pattern>%-5level [%thread] %logger{20} - %msg%n</pattern>
+            </message>
+            <http>
+                <url>http://localhost:3100/loki/api/v1/push</url>
+                <useProtobufApi>true</useProtobufApi>
+                <sender class="com.github.loki4j.logback.ApacheHttpSender" />
+                <requestTimeoutMs>10000</requestTimeoutMs>
+            </http>
+            <batch>
+                <maxItems>100</maxItems>
+                <timeoutMs>10000</timeoutMs>
+            </batch>
+            <verbose>true</verbose>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="LOKI"/>
+        </root>
+    </springProfile>
+</configuration>

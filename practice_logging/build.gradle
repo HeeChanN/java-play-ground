@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+//	implementation("org.springframework.boot:spring-boot-starter-web") {
+//		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+//	}
+	// Log4j2 백엔드 사용
+	//implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	implementation("org.springframework.boot:spring-boot-starter-web")
+
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//loki4j
+	implementation 'com.github.loki4j:loki-logback-appender:2.0.0'
+	implementation 'com.github.loki4j:loki-protobuf:0.0.2_pb4.31.0'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

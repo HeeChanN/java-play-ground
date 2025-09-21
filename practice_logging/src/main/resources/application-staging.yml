@@ -1,0 +1,9 @@
+logging:
+  file:
+    name: ./logs/app.log
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      max-file-size: 100MB
+      total-size-cap: 0
+      max-history: 30
